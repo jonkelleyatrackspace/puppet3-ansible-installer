@@ -1,0 +1,7 @@
+---
+
+- name: Enable agent at boot
+  action: service name=puppet enabled=yes
+
+- name: Enable puppetserver at boot
+  action: service name=puppetserver enabled=yes

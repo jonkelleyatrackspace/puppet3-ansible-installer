@@ -1,0 +1,23 @@
+---
+- name: Add r10k yum repository from copr
+  action: copy src=r10k-el6.repo dest=/etc/yum.repos.d/copr-jonkelley-r10k-el6.repo owner=root group=root
+
+- name: Install r10k tool from copr
+  action: yum name="rubygem-r10k" state=installed
+
+- name: Install argparse for centos 6
+  action: yum name="python-argparse" state=installed
+
+- name: Install r10kwrapper tool from copr
+  action: yum name="r10kwrapper" state=installed
+
+- name: Clone r10k Puppetfiles in to /etc/r10k
+  action: git
+    accept_hostkey="yes"
+    #key_file="/root/.ssh/gitclone_id_rsa"
+    repo="https://github.com/jonkelleyatrackspace/puppet3-r10kconfigs.git"
+    dest="/etc/r10k"
+    recursive="yes"
+
+- name: Use r10kwrapper to get modules roles and profiles.
+  action: command r10kwrapper -v 3 -x install -c all

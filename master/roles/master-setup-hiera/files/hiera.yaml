@@ -1,0 +1,12 @@
+:backends:
+  - yaml
+
+:yaml:
+  :datadir: "/etc/puppet/environments/%{environment}/hieradata"
+
+:hierarchy:
+  - "global/hiera/common"
+  - "env/hiera/defaults"
+  - "env/hiera/common"
+  - "settings" # Used for local puppet config.
+

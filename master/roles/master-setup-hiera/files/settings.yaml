@@ -1,0 +1,19 @@
+# DO NOT DELETE THIS FILE
+# DO NOT DELETE THIS FILE
+# Persistant on-disk settings hierarchy 
+#  for the master environment TIER.
+# DO NOT DELETE THIS FILE
+# DO NOT DELETE THIS FILE
+
+# profile_puppetdb keys
+# By default profile_puppetdb will deploy a local postgres server
+#   for puppetdb. UNCOMMENT the lines below to select a specific 
+#   data source target rather then localhost.
+#  profile_puppetdb::database_host: database-host
+#  profile_puppetdb::database_port: 5432
+#  profile_puppetdb::database_username: username
+#  profile_puppetdb::database_password: notapassword
+#  profile_puppetdb::database_name: breakfixpuppet
+#  profile_puppetdb::database_ssl: true
+#  profile_puppetdb::database_subparam: "&sslfactory=org.postgresql.ssl.jdbc4.LibPQFactory&sslmode=verify-ca"
+#  profile_puppetdb::database_validate: true

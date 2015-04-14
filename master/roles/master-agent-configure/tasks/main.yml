@@ -1,0 +1,29 @@
+---
+- name: Clean java master key
+  action: command puppet cert clean {{ ansible_fqdn }}
+
+- name: Generate client cert
+  action: command puppet agent --test --server {{ ansible_fqdn }}
+  register: command_result
+  failed_when: "'THIS_WILL_NEVER_FAIL' in command_result.stdout"
+#Info: Creating a new SSL key for puppet-n01.staging.us
+#Exiting; no certificate found and waitforcert is disabled
+
+- name: Sign client cert
+  action: command puppet cert sign {{ ansible_fqdn }}
+
+- name: Validate failure mode
+  action: command puppet agent --test --server {{ ansible_fqdn }}
+  register: command_result
+  failed_when: "'THIS_WILL_NEVER_FAIL' in command_result.stdout"
+#Error: Could not request certificate: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed:
+
+- name: Restart puppetserver
+  action: service name=puppetserver state=restarted
+
+- name: Run puppet
+  action: command puppet agent --test --server {{ ansible_fqdn }} --pluginsync --verbose
+
+- name: Start puppet agent
+  action: service name=puppet state=started
+

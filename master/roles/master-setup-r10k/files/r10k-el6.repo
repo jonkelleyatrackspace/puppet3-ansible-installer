@@ -1,0 +1,6 @@
+[jonkelley-r10k]
+name=jonkelley r10k copr
+baseurl=http://copr-be.cloud.fedoraproject.org/results/jonkelley/r10k/epel-6-$basearch/
+skip_if_unavailable=True
+gpgcheck=0
+enabled=1

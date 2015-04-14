@@ -1,0 +1,10 @@
+---
+# Software
+
+- name: install puppet software
+  action: yum name="{{ item }}" state=installed
+  with_items:
+    - puppet
+    - puppet-server
+    - puppetserver
+    - git

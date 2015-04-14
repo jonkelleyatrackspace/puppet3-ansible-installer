@@ -1,0 +1,17 @@
+---
+# Configure puppet master
+- hosts: master
+  sudo: yes
+  vars_prompt:
+    - name: "SERVICE_TIER"
+      prompt: "What service tier is this? dev,stage,prod? This will define important values."
+      default: "dev"
+  roles:
+   - master-install-epel-repo
+   - master-install-puppetlabs-repo
+   - master-install-packages
+   - master-setup-r10k
+   - master-setup-hiera
+   - master-configure
+   - master-agent-configure
+   - master-enable-onboot

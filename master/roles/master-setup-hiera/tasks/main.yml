@@ -1,0 +1,17 @@
+---
+- name: Copy Hiera config into Puppet
+  action: copy src=hiera.yaml dest=/etc/puppet/hiera.yaml owner=puppet group=puppet 
+
+- name: Remove stock Heira SYSTEM config the package installs it
+  file: path=/etc/hiera.yaml state=absent
+
+- name: Symlink Heira SYSTEM config to puppet Hiera config
+  action: file src=/etc/puppet/hiera.yaml dest=/etc/hiera.yaml state=link
+
+# NOTE: If you invoke a new environment without a Hiera directory existing for each $environment then
+#       puppet will not start. But it will fail with cryptic horrible stack traces. Do not remove this.
+- name: Create Hiera default config environments
+  file: path="/etc/puppet/environments/{{ SERVICE_TIER }}/hieradata" state=directory owner=puppet group=puppet
+
+- name: Copy Ansible Default Kick Settings
+  action: copy  src=settings.yaml dest=/etc/puppet/environments/{{ SERVICE_TIER }}/hieradata/settings.yaml owner=puppet group=puppet

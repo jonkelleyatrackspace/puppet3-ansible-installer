@@ -1,0 +1,21 @@
+---
+- name: Copy initial puppet.conf into place
+  action: template src=puppet.conf.j2 dest=/etc/puppet/puppet.conf owner=puppet group=puppet mode=0755
+
+- name: Install augeas packages
+  action: yum name={{ item }} state=installed
+  with_items:
+     - augeas
+     - ruby-augeas
+
+- name: Create the default puppet environment trees
+  file: path="/etc/puppet/environments/{{ SERVICE_TIER }}" state=directory owner=puppet group=puppet
+
+- name: Generate master key filecopy
+  action:  copy src=generate-master-key.sh dest=/tmp/genkey.sh owner=root group=root mode=755
+
+- name: Generate master key
+  action: command /bin/bash /tmp/genkey.sh
+
+- name: Start puppetserver
+  action: service name=puppetserver state=started
