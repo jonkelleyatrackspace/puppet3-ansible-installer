@@ -1,3 +1,7 @@
 ---
+- name: Update yum cert trust
+  action: command yum upgrade ca-certificates
+
 - name: Downloading and enable the EPEL repository definitions.
   action: yum name=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm state=present
+
